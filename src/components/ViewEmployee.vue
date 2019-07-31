@@ -38,7 +38,7 @@ export default {
 
     beforeRouteEnter(to, from, next){
         
-        db.collection('employee').where('employee_id', '==', to.params.employee_id).get()
+        db.firestore().collection('employee').where('employee_id', '==', to.params.employee_id).get()
             .then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     next(vm => {

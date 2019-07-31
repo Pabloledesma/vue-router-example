@@ -33,7 +33,7 @@
     </div>
 </template>
 <script>
-import db from './firebaseInit'
+import app from './firebaseInit'
 
 export default {
     name: 'Dashboard',
@@ -44,7 +44,7 @@ export default {
     },
 
     created(){
-        db.collection('employee').get().then(
+        app.firestore().collection('employee').get().then(
             querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const data = {
