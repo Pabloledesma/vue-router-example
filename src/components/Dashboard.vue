@@ -1,35 +1,41 @@
 <template>
     <div>
-        <h1>Dashboard</h1>
+        <div v-show="authenticated">
 
-        <nav class="panel">
-            <p class="panel-heading">
-                Employees
-            </p>
-            <div class="panel-block">
-                <p class="control has-icons-left">
-                <input class="input is-small" type="text" placeholder="search">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                </span>
+            <h1>Dashboard</h1>
+
+            <nav class="panel">
+                <p class="panel-heading">
+                    Employees
                 </p>
-            </div>
-           
-            <router-link 
-                v-bind:to="{ name: 'ViewEmployee', params: { employee_id: employee.employee_id }}" 
-                class="panel-block" 
-                v-for="employee in employees"
-                :key="employee.Id"
-            >
-                <span class="panel-icon">
-                <i class="fas fa-book" aria-hidden="true"></i>
-                </span>
-                {{ employee.name }}
-            </router-link>
+                <div class="panel-block">
+                    <p class="control has-icons-left">
+                    <input class="input is-small" type="text" placeholder="search">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </span>
+                    </p>
+                </div>
             
-        </nav>
+                <router-link 
+                    v-bind:to="{ name: 'ViewEmployee', params: { employee_id: employee.employee_id }}" 
+                    class="panel-block" 
+                    v-for="employee in employees"
+                    :key="employee.Id"
+                >
+                    <span class="panel-icon">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                    </span>
+                    {{ employee.name }}
+                </router-link>
+                
+            </nav>
 
-        <router-link class="button" to="/new">New</router-link>
+            <router-link class="button" to="/new">New</router-link>
+        </div>
+        <div v-show="!authenticated">
+            <p>Please sign up or login.</p>
+        </div>
     </div>
 </template>
 <script>
@@ -59,6 +65,18 @@ export default {
                 })
             }
         )
+    },
+
+    computed: {
+        authenticated(){
+            app.auth().onAuthStateChanged(user => {
+                if(user){
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
     }
 }
 </script>

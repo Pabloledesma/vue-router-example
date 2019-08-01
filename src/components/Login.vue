@@ -4,7 +4,7 @@
         <div class="field">
             <label class="label">Email</label>
             <div class="control has-icons-left has-icons-right">
-                <input class="input" type="email" placeholder="Email input" v-model="emal">
+                <input class="input" type="email" placeholder="Email input" v-model="email">
                 <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
                 </span>
@@ -47,7 +47,7 @@ export default {
                 .then(() => {
                     this.$router.push('/')
                 }).catch(error => {
-                    console.log(error.message)
+                    alert(error.message)
                 })
         }
     }

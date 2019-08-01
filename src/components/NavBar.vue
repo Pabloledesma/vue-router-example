@@ -46,12 +46,13 @@
             <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                <router-link class="button is-primary" to="/register">
-                    <strong>Sign up</strong>
-                </router-link>
-                <router-link class="button is-light" to="/login">
-                    Log in
-                </router-link>
+                    <router-link class="button is-primary" to="/register" v-show="!authenticated">
+                        <strong>Sign up</strong>
+                    </router-link>
+                    <router-link class="button is-light" to="/login" v-show="!authenticated">
+                        Log in
+                    </router-link>
+                    <button class="button" @click="logout" v-show="authenticated">Logout</button>
                 </div>
             </div>
             </div>
@@ -59,7 +60,35 @@
     </nav>
 </template>
 <script>
+import app from './firebaseInit'
+
 export default {
-    name: 'NavBar'
+    name: 'NavBar',
+    data(){
+        return {
+            
+        }
+    },
+
+    computed: {
+        authenticated(){
+            app.auth().onAuthStateChanged(user => {
+                if(user){
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+    },
+
+    methods: {
+        logout(){
+            app.auth().signOut().then(() => {
+                this.$router.push('/login')
+            })
+        }
+    }
+    
 }
 </script>

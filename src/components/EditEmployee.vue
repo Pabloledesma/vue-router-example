@@ -96,7 +96,7 @@ export default {
                        position: this.position
                    }).then(() => {
                        this.$router.push({name: 'EditEmployee', params: {employee_id: this.employee_id}})
-                   }).catch(error => console.log(error))
+                   }).catch(error => alert(error))
                 })
             })
         }
